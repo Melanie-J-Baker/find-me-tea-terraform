@@ -4,6 +4,6 @@ resource "aws_s3_bucket_website_configuration" "website-config" {
     suffix = "index.html"
   }
   error_document {
-    key = "404.jpeg"
+    key = "error.html"
   }
 }

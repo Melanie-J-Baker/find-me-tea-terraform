@@ -16,3 +16,11 @@ variable "access_key" {
 variable "secret_key" {
   type = string
 }
+
+variable "zone_id" {
+  type = string
+}
+
+variable "route53_zone_id" {
+  type = string
+}

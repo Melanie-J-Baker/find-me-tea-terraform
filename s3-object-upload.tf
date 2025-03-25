@@ -5,7 +5,6 @@ resource "aws_s3_object" "object-upload-html" {
   source       = "uploads/${each.value}"
   content_type = "text/html"
   etag         = filemd5("uploads/${each.value}")
-  acl          = "public-read"
 }
 
 resource "aws_s3_object" "object-upload-css" {
@@ -15,7 +14,6 @@ resource "aws_s3_object" "object-upload-css" {
   source       = "uploads/assets/${each.value}"
   content_type = "text/css"
   etag         = filemd5("uploads/assets/${each.value}")
-  acl          = "public-read"
 }
 
 resource "aws_s3_object" "object-upload-js" {
@@ -25,15 +23,13 @@ resource "aws_s3_object" "object-upload-js" {
   source       = "uploads/assets/${each.value}"
   content_type = "text/javascript"
   etag         = filemd5("uploads/assets/${each.value}")
-  acl          = "public-read"
 }
 
 resource "aws_s3_object" "object-upload-png" {
   for_each     = fileset("uploads/assets/", "*.png")
   bucket       = data.aws_s3_bucket.selected-bucket.bucket
-  key          = each.value
+  key          = "assets/${each.value}"
   source       = "uploads/assets/${each.value}"
   content_type = "image/png"
   etag         = filemd5("uploads/assets/${each.value}")
-  acl          = "public-read"
 }

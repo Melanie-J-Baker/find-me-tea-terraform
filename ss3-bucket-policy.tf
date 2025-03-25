@@ -27,7 +27,7 @@ data "aws_iam_policy_document" "iam-policy-1" {
       "arn:aws:s3:::www.${var.bucket_name}",
       "arn:aws:s3:::www.${var.bucket_name}/*",
     ]
-    actions = ["S3:GetObject"]
+    actions = ["s3:GetObject"]
     principals {
       type        = "*"
       identifiers = ["*"]
