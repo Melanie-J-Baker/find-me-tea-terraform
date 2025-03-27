@@ -10,7 +10,7 @@ resource "aws_s3_object" "object-upload-html" {
 resource "aws_s3_object" "object-upload-css" {
   for_each     = fileset("uploads/assets/", "*.css")
   bucket       = data.aws_s3_bucket.selected-bucket.bucket
-  key          = each.value
+  key          = "assets/${each.value}"
   source       = "uploads/assets/${each.value}"
   content_type = "text/css"
   etag         = filemd5("uploads/assets/${each.value}")
@@ -19,7 +19,7 @@ resource "aws_s3_object" "object-upload-css" {
 resource "aws_s3_object" "object-upload-js" {
   for_each     = fileset("uploads/assets/", "*.js")
   bucket       = data.aws_s3_bucket.selected-bucket.bucket
-  key          = each.value
+  key          = "assets/${each.value}"
   source       = "uploads/assets/${each.value}"
   content_type = "text/javascript"
   etag         = filemd5("uploads/assets/${each.value}")
