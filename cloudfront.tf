@@ -1,5 +1,5 @@
 locals {
-  s3_origin_id   = "${var.bucket_name}-origin"
+  s3_origin_id = "${var.bucket_name}-origin"
 }
 
 resource "aws_cloudfront_distribution" "findmetea-cloudfront" {
