@@ -1,14 +1,13 @@
 exports.handler = async (event) => {
-    // Lambda function logic here
+    const googleApiKey = process.env.google_api_key;
     const response = {
         statusCode: 200,
         headers: {
             "Content-Type": "application/json"
         },
-        body: JSON.stringify({
-            message: "Hello from Lambda! (get-api-key)"
-            // Add more data as needed
-        })
+        body: {
+            googleApiKey    
+        }
     };
     return response;
 };

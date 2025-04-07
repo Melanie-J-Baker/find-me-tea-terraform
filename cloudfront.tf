@@ -18,6 +18,7 @@ resource "aws_cloudfront_distribution" "findmetea-cloudfront" {
     connection_timeout  = 10
   }
   enabled             = true
+  is_ipv6_enabled = true
   comment             = var.domain_name
   default_root_object = "index.html"
 
