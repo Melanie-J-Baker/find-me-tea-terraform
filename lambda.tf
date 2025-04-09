@@ -24,7 +24,7 @@ resource "aws_lambda_function" "get_api_key_lambda" {
 
   environment {
     variables = {
-      google_api_key = "AIzaSyCkMDPk6ujbCI0QPG28FlTgTF4kUeZtxCw"
+      google_api_key = var.google_api_key
     }
   }
 }
@@ -38,7 +38,7 @@ resource "aws_lambda_function" "post_google_places_api_lambda" {
   source_code_hash = data.archive_file.lambda_package_post_google_places_api.output_base64sha256
   environment {
     variables = {
-      google_api_key = "AIzaSyCkMDPk6ujbCI0QPG28FlTgTF4kUeZtxCw"
+      google_api_key = var.google_api_key
     }
   }
 }

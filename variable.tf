@@ -41,3 +41,7 @@ variable "custom_domain_cloudfront_url" {
 variable "cloudfront_distribution_id" {
   type = string
 }
+
+variable "google_api_key" {
+  type = string
+}
