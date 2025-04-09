@@ -1,3 +1,5 @@
+# REST API
+
 resource "aws_api_gateway_rest_api" "find_me_tea_api" {
   name        = "find_me_tea_api"
   description = "API Gateway for Find Me Tea app"
@@ -6,6 +8,8 @@ resource "aws_api_gateway_rest_api" "find_me_tea_api" {
     types = ["REGIONAL"]
   }
 }
+
+# GET - Google Maps API key
 
 resource "aws_api_gateway_resource" "google-maps-api-key" {
   rest_api_id = aws_api_gateway_rest_api.find_me_tea_api.id
@@ -35,7 +39,6 @@ resource "aws_api_gateway_method_response" "get_api_key" {
   http_method = aws_api_gateway_method.get_api_key.http_method
   status_code = "200"
 
-  //cors section
   response_parameters = {
     "method.response.header.Access-Control-Allow-Headers" = true,
     "method.response.header.Access-Control-Allow-Methods" = true,
@@ -49,7 +52,6 @@ resource "aws_api_gateway_integration_response" "get_api_key" {
   http_method = aws_api_gateway_method.get_api_key.http_method
   status_code = aws_api_gateway_method_response.get_api_key.status_code
 
-//cors
   response_parameters = {
     "method.response.header.Access-Control-Allow-Headers" = "'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token'",
     "method.response.header.Access-Control-Allow-Methods" = "'GET,OPTIONS,POST,PUT'",
@@ -62,7 +64,8 @@ resource "aws_api_gateway_integration_response" "get_api_key" {
   ]
 }
 
-// OPTIONS
+# OPTIONS - Google Maps API Key
+
 resource "aws_api_gateway_method" "options_get_api_key" {
   rest_api_id   = aws_api_gateway_rest_api.find_me_tea_api.id
   resource_id   = aws_api_gateway_resource.google-maps-api-key.id
@@ -112,6 +115,8 @@ resource "aws_api_gateway_integration_response" "options_get_api_key_integration
   ]
 }
 
+# POST - Google Places API (Nearby Search)
+
 resource "aws_api_gateway_resource" "search" {
   rest_api_id = aws_api_gateway_rest_api.find_me_tea_api.id
   parent_id   = aws_api_gateway_rest_api.find_me_tea_api.root_resource_id
@@ -140,7 +145,6 @@ resource "aws_api_gateway_method_response" "post_google_places_api" {
   http_method = aws_api_gateway_method.post_google_places_api.http_method
   status_code = "200"
 
-  //cors section
   response_parameters = {
     "method.response.header.Access-Control-Allow-Headers" = true,
     "method.response.header.Access-Control-Allow-Methods" = true,
@@ -154,7 +158,6 @@ resource "aws_api_gateway_integration_response" "post_google_places_api" {
   http_method = aws_api_gateway_method.post_google_places_api.http_method
   status_code = aws_api_gateway_method_response.post_google_places_api.status_code
 
-  //cors
   response_parameters = {
     "method.response.header.Access-Control-Allow-Headers" = "'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token'",
     "method.response.header.Access-Control-Allow-Methods" = "'GET,OPTIONS,POST,PUT'",
@@ -166,6 +169,8 @@ resource "aws_api_gateway_integration_response" "post_google_places_api" {
     aws_api_gateway_integration.post_google_places_api_lambda_integration
   ]
 }
+
+# OPTIONS - Google Places API (Nearby Search)
 
 resource "aws_api_gateway_method" "options_search" {
   rest_api_id   = aws_api_gateway_rest_api.find_me_tea_api.id
@@ -216,6 +221,8 @@ resource "aws_api_gateway_integration_response" "options_search_integration_resp
   ]
 }
 
+# Stage, Deployment, Custom Domain Name, and Base Path Mapping
+
 resource "aws_api_gateway_deployment" "deployment" {
   depends_on = [
     aws_api_gateway_integration.get_api_key_lambda_integration,
@@ -235,7 +242,7 @@ resource "aws_api_gateway_domain_name" "custom_domain" {
 }
 
 resource "aws_api_gateway_base_path_mapping" "gateway_mapping" {
-    domain_name = "api.mel-baker.co.uk"
-    api_id = aws_api_gateway_rest_api.find_me_tea_api.id
-    stage_name = "dev"
+  domain_name = "api.mel-baker.co.uk"
+  api_id      = aws_api_gateway_rest_api.find_me_tea_api.id
+  stage_name  = "dev"
 }

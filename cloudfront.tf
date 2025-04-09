@@ -18,7 +18,7 @@ resource "aws_cloudfront_distribution" "findmetea-cloudfront" {
     connection_timeout  = 10
   }
   enabled             = true
-  is_ipv6_enabled = true
+  is_ipv6_enabled     = true
   comment             = var.domain_name
   default_root_object = "index.html"
 
@@ -32,6 +32,8 @@ resource "aws_cloudfront_distribution" "findmetea-cloudfront" {
     forwarded_values {
       query_string = true
 
+      headers = ["Origin", "Access-Control-Request-Headers"]
+
       cookies {
         forward = "none"
       }
@@ -39,8 +41,8 @@ resource "aws_cloudfront_distribution" "findmetea-cloudfront" {
 
     viewer_protocol_policy = "redirect-to-https"
     min_ttl                = 0
-    default_ttl            = 3600
-    max_ttl                = 86400
+    default_ttl            = 0
+    max_ttl                = 0
     compress               = true
   }
 
@@ -59,3 +61,4 @@ resource "aws_cloudfront_distribution" "findmetea-cloudfront" {
 
   price_class = "PriceClass_All"
 }
+

@@ -1,4 +1,5 @@
-// Create Route53 record
+# Create Route53 records
+
 resource "aws_route53_record" "ssl_cert_validation_records" {
   for_each = {
     for dvo in aws_acm_certificate.ssl_cert.domain_validation_options : dvo.domain_name => {
@@ -35,7 +36,7 @@ data "aws_route53_zone" "mel-baker" {
 resource "aws_route53_record" "custom_domain_record" {
   name = "api"
   type = "CNAME"
-  ttl = "300" # TTL in seconds
+  ttl  = "300" # TTL in seconds
 
   records = ["d2wko6ft2byoqu.cloudfront.net"]
 

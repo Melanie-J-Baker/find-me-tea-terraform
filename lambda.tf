@@ -1,3 +1,5 @@
+# Zip Lambda Files
+
 data "archive_file" "lambda_package_get_api_key" {
   type        = "zip"
   source_file = "get-api-key.js"
@@ -9,6 +11,8 @@ data "archive_file" "lambda_package_post_google_places_api" {
   source_file = "post-google-places-api.js"
   output_path = "post-google-places-api.zip"
 }
+
+# Lambda Functions
 
 resource "aws_lambda_function" "get_api_key_lambda" {
   filename         = "get-api-key.zip"
@@ -32,7 +36,14 @@ resource "aws_lambda_function" "post_google_places_api_lambda" {
   handler          = "post-google-places-api.handler"
   runtime          = "nodejs18.x"
   source_code_hash = data.archive_file.lambda_package_post_google_places_api.output_base64sha256
+  environment {
+    variables = {
+      google_api_key = "AIzaSyCkMDPk6ujbCI0QPG28FlTgTF4kUeZtxCw"
+    }
+  }
 }
+
+# Permissions
 
 resource "aws_iam_role" "lambda_role" {
   name = "lambda_role"
