@@ -14,9 +14,9 @@ resource "aws_acm_certificate" "ssl_cert" {
 
 // Create SSL certifcate for API domain
 resource "aws_acm_certificate" "my_api_cert" {
-  domain_name               = "api.mel-baker.co.uk"
+  domain_name               = var.api_domain_name
   provider                  = aws
-  subject_alternative_names = ["api.mel-baker.co.uk"]
+  subject_alternative_names = [var.api_domain_name]
   validation_method         = "DNS"
 
   lifecycle {

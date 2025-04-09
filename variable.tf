@@ -33,3 +33,11 @@ variable "zone_id" {
 variable "route53_zone_id" {
   type = string
 }
+
+variable "custom_domain_cloudfront_url" {
+  type = string
+}
+
+variable "cloudfront_distribution_id" {
+  type = string
+}

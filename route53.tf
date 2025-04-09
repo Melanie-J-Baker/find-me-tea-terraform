@@ -23,13 +23,13 @@ resource "aws_route53_record" "redirect" {
   type    = "A"
   alias {
     name                   = aws_cloudfront_distribution.findmetea-cloudfront.domain_name
-    zone_id                = "Z2FDTNDATAQYW2" // Cloudfront distribution id
+    zone_id                = var.cloudfront_distribution_id
     evaluate_target_health = false
   }
 }
 
 data "aws_route53_zone" "mel-baker" {
-  name         = "mel-baker.co.uk"
+  name         = var.domain_name
   private_zone = false
 }
 
@@ -38,7 +38,7 @@ resource "aws_route53_record" "custom_domain_record" {
   type = "CNAME"
   ttl  = "300" # TTL in seconds
 
-  records = ["d2wko6ft2byoqu.cloudfront.net"]
+  records = [var.custom_domain_cloudfront_url]
 
   zone_id = data.aws_route53_zone.mel-baker.zone_id
 }

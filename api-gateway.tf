@@ -236,13 +236,13 @@ resource "aws_api_gateway_deployment" "deployment" {
 }
 
 resource "aws_api_gateway_domain_name" "custom_domain" {
-  domain_name     = "api.mel-baker.co.uk"
+  domain_name     = var.api_domain_name
   certificate_arn = aws_acm_certificate.my_api_cert.arn
   security_policy = "TLS_1_2"
 }
 
 resource "aws_api_gateway_base_path_mapping" "gateway_mapping" {
-  domain_name = "api.mel-baker.co.uk"
+  domain_name = var.api_domain_name
   api_id      = aws_api_gateway_rest_api.find_me_tea_api.id
   stage_name  = "dev"
 }
