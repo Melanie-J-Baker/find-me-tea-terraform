@@ -1,5 +1,7 @@
 # find-me-tea-terraform
 
-Using Terraform to host (and configure) a website on Amazon S3. 
+Using Terraform to host (and configure) a fullstack website on Amazon Web Services using Amazon S3, CloudFront, Route53, AWS Certificate Manager, API Gateway, and AWS Lambda.
 
-The website is Find me tea - a simple app using the Google Maps Places API to find the nearest places selling tea (see the React frontend code here: https://github.com/Melanie-J-Baker/find-me-tea, and Express backend code here: https://github.com/Melanie-J-Baker/find-me-tea-api).
+A simple app called "Find me tea" was created, using the Google Maps Places API to find the nearest places selling tea. This React frontend is hosted on Amazon S3 (using CloudFront and Route53). See the React frontend code here: https://github.com/Melanie-J-Baker/find-me-tea. This frontend makes HTTP requests to a REST API created using API Gateway and AWS Lambda, which in turn makes fetch requests to the Google Places API (Nearby Search) to get locations of nearby places selling tea (within a 2km radius).
+
+This repository contains the Terraform configuration for this AWS hosted project.
