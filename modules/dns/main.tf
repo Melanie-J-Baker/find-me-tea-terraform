@@ -1,8 +1,8 @@
-# Create Route53 records
+// Create Route53 records
 
 resource "aws_route53_record" "ssl_cert_validation_records" {
   for_each = {
-    for dvo in aws_acm_certificate.ssl_cert.domain_validation_options : dvo.domain_name => {
+    for dvo in var.ssl_cert_domain_validation_options : dvo.domain_name => {
       name   = dvo.resource_record_name
       record = dvo.resource_record_value
       type   = dvo.resource_record_type
@@ -22,7 +22,7 @@ resource "aws_route53_record" "redirect" {
   name    = var.domain_name
   type    = "A"
   alias {
-    name                   = aws_cloudfront_distribution.findmetea-cloudfront.domain_name
+    name                   = var.cloudfront_domain_name
     zone_id                = var.cloudfront_distribution_id
     evaluate_target_health = false
   }
@@ -34,18 +34,20 @@ data "aws_route53_zone" "mel-baker" {
 }
 
 resource "aws_route53_record" "custom_domain_record" {
-  name = "api"
-  type = "CNAME"
-  ttl  = "300" # TTL in seconds
-
-  records = [var.custom_domain_cloudfront_url]
-
   zone_id = data.aws_route53_zone.mel-baker.zone_id
+  name    = "api"
+  type    = "A"
+
+  alias {
+    name                   = var.api_cloudfront_custom_domain_name
+    zone_id                = var.api_cloudfront_zone_id
+    evaluate_target_health = false
+  }
 }
 
 resource "aws_route53_record" "api_ssl_cert_validation_records" {
   for_each = {
-    for dvo in aws_acm_certificate.my_api_cert.domain_validation_options : dvo.domain_name => {
+    for dvo in var.my_api_cert_domain_validation_options : dvo.domain_name => {
       name   = dvo.resource_record_name
       record = dvo.resource_record_value
       type   = dvo.resource_record_type

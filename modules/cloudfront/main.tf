@@ -2,10 +2,12 @@ locals {
   s3_origin_id = "${var.bucket_name}-origin"
 }
 
+// Create CloudFront distribution
+
 resource "aws_cloudfront_distribution" "findmetea-cloudfront" {
   origin {
     origin_id   = local.s3_origin_id
-    domain_name = "${aws_s3_bucket.bucket-1.bucket}.s3-website-${var.region}.amazonaws.com"
+    domain_name = "${var.bucket}.s3-website-${var.region}.amazonaws.com"
     custom_origin_config {
       http_port                = 80
       https_port               = 443
@@ -53,7 +55,7 @@ resource "aws_cloudfront_distribution" "findmetea-cloudfront" {
   }
 
   viewer_certificate {
-    acm_certificate_arn            = aws_acm_certificate.ssl_cert.arn
+    acm_certificate_arn            = var.ssl_cert_arn
     cloudfront_default_certificate = false
     ssl_support_method             = "sni-only"
     minimum_protocol_version       = "TLSv1.2_2021"
