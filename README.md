@@ -6,5 +6,4 @@ A simple app called "Find me tea" was created, using the Google Maps Places API 
 
 This repository contains the Terraform configuration for this AWS hosted project. Terraform modules were used to organise the code. To try out the website visit: https://mel-baker.co.uk
 
-![Image](https://github.com/user-attachments/assets/730110cf-dca4-4ff5-b007-9f62a4933cd9)
 ![Image](https://github.com/user-attachments/assets/bf3e3e59-e4ce-406b-9abe-4185de6802b5)
